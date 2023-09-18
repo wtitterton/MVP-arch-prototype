@@ -33,7 +33,9 @@ export class ProductsDetailPagePresenter extends MessagesPresenter {
     const product = await this.productRepo.getById(id);
 
     if (product.error) {
-       this.setNetworkErrors(["Couldn't load product detail. Please Try again."])
+       this.setNetworkErrors(["Couldn't load product detail. Please Try again."]);
+       this.vm.isLoading = false;
+       return
     }
 
     runInAction(() => {
