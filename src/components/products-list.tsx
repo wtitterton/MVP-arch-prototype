@@ -12,10 +12,10 @@ interface Product {
 
 interface ProductListProps  {
   products: Product[];
-  deleteCallback: (id: number) => void;
+  onDelete: (id: number) => void;
 }
 
-export const ProductsList = ({products, deleteCallback} : ProductListProps) => {
+export const ProductsList = ({products, onDelete} : ProductListProps) => {
    const store = useContext(StoreContext);
   const { router } = store;
   const list = products.map((product) => {
@@ -25,7 +25,7 @@ export const ProductsList = ({products, deleteCallback} : ProductListProps) => {
           <div className="product-info">
             <h2>{product.title}</h2>
             <Link router={router} route={routes.productDetail} params={{id: product.id}} title='View Product' />
-            <button onClick={() => deleteCallback(product.id)}>Delete</button>
+            <button onClick={() => onDelete(product.id)}>Delete</button>
           </div>
        </div>
     )

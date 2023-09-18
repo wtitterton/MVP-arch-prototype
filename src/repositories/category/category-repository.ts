@@ -2,9 +2,6 @@ import { inject, singleton } from 'tsyringe';
 import { HttpGateway } from '../../core';
 import { makeAutoObservable } from 'mobx';
 
-
-type categoryDto = string[]
-
 export interface Category {
   id: number;
   name: string;
@@ -19,14 +16,14 @@ export class CategoryRepository {
   }
   
   load = async () => {
-    const categoryDto = await this.httpGateway.get<categoryDto>('products/categories');
+    const categoryResponse = await this.httpGateway.get<string[]>('products/categories');
     return {
-      ...categoryDto,
-      results: categoryDto.results.map(this.constructCategory)
+      ...categoryResponse,
+      results: categoryResponse.results.map(this.constructCategoryPm)
     }
   };
 
-  private constructCategory = (categoryName: string , id: number): Category => {
+  private constructCategoryPm = (categoryName: string , id: number): Category => {
     return {
       id,
       name: categoryName,

@@ -13,7 +13,6 @@ export interface Product {
   image: string;
 }
 
-
 @singleton()
 export class ProductRepository {
   constructor(
@@ -23,46 +22,50 @@ export class ProductRepository {
   }
   
   load = async () => {
-    const productsDto = await this.httpGateway.get<Product[]>('products');
+    const productsResponse = await this.httpGateway.get<Product[]>('products');
 
     return {
-      ...productsDto,
-      results: productsDto.results.map(this.constructProduct)
+      ...productsResponse,
+      results: productsResponse.results.map(this.constructProductPm)
     }
   };
 
   getProductsByCategory = async (category: string) => {
-    const productsDto = await this.httpGateway.get<Product[]>(`products/category/${category}`);
-    // Merge in modified model
+    const productsResponse = await this.httpGateway.get<Product[]>(`products/category/${category}`);
+    // Merge in Programmers model
     return {
-      ...productsDto,
-      results: productsDto.results.map(this.constructProduct)
+      ...productsResponse,
+      results: productsResponse.results.map(this.constructProductPm)
     }
   }
 
   delete = async (id: number) => {
-     const productsDto = await this.httpGateway.delete<Product[]>(`products/${id}`);
+     const productsResponse = await this.httpGateway.delete<Product[]>(`products/${id}`);
+     // Merge in Programmers model
      return {
-        ...productsDto,
-        results: productsDto.results.map(this.constructProduct)
+        ...productsResponse,
+        results: productsResponse.results.map(this.constructProductPm)
      }
   }
 
   create = async (product: ProductDto) => {
-    const productDto = await this.httpGateway.post<Product, ProductDto>('products', product);
-    return productDto
+    const productsResponse = await this.httpGateway.post<Product, ProductDto>('products', product);
+     return {
+        ...productsResponse,
+        results: this.constructProductPm(productsResponse.results)
+     }
   }
 
   getById = async (id: string) => {
-    const productDTO = await this.httpGateway.get<Product>(`products/${id}`);
-     // Merge in modified model
+    const productsResponse = await this.httpGateway.get<Product>(`products/${id}`);
+     // Merge in programmersModel
     return {
-      ...productDTO,
-      results: this.constructProduct(productDTO.results)
+      ...productsResponse,
+      results: this.constructProductPm(productsResponse.results)
     };
   }
 
-  private constructProduct = (product: Product): Product => {
+  private constructProductPm = (product: Product): Product => {
     return {
       id: product.id,
       title: product.title,
