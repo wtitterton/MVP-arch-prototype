@@ -25,11 +25,10 @@ export class HttpGateway {
         const data = await response.json();
         
         // Api should return and error but it doesn't
-        if(data === null) {
+        if(data === null || !response.ok) {
           throw new Error("No data returned");
         }
-        
-
+      
         return {
           results: data  as T,
           error: null,
@@ -61,7 +60,7 @@ export class HttpGateway {
 
         // Api should return and error but it doesn't
         if(data === null) {
-          throw new Error("No data returned");
+          throw new Error("something went wrong!");
         }
 
         return {
@@ -96,11 +95,10 @@ export class HttpGateway {
         const data = await response.json();
         
         // Api should return and error but it doesn't
-        if(data === null) {
-          throw new Error("No data returned");
+        if(data === null || !response.ok) {
+          throw new Error("Something went wrong!");
         }
         
-
         return {
           results: data  as T,
           error: null,
