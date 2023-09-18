@@ -30,9 +30,9 @@ export class ProductsDetailPagePresenter extends MessagesPresenter {
   }
 
   load = async (id: string) => {
-    const product = await this.productRepo.getById(id);
+    const productResponse = await this.productRepo.getById(id);
 
-    if (product.error) {
+    if (!productResponse.success) {
        this.setNetworkErrors(["Couldn't load product detail. Please Try again."]);
        this.vm.isLoading = false;
        return
@@ -40,7 +40,7 @@ export class ProductsDetailPagePresenter extends MessagesPresenter {
 
     runInAction(() => {
         this.vm = {
-          product: this.constructorProductVm(product.results), 
+          product: this.constructorProductVm(productResponse.results), 
           isLoading: false,
         };
     })
