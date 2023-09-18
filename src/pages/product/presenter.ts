@@ -77,6 +77,12 @@ export class ProductsPagePresenter extends MessagesPresenter {
     
     if (productPm.success) {
       this.setUserMessages(['Product was deleted successfully!']);
+      // Reload products won't make a difference as the api doesn't actually remove 
+      // the product from the database, but in normal circumstances this would return all products 
+      //bar the deleted one
+      this.vm.isProductsLoading = true;
+      await this.productRepo.load();
+      this.vm.isProductsLoading = false;
       return;
     }
 

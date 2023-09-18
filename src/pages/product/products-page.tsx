@@ -32,7 +32,7 @@ export const ProductsPage = observer(() => {
           <>
           <h2>Total Products: {total}</h2>
             <button onClick={order}> Order Products </button>
-            <ProductsList products={vm.products} deleteCallback={deleteProduct} />
+            <ProductsList products={vm.products} onDelete={deleteProduct} />
           </>
         }
       </>

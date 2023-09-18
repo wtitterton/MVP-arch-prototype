@@ -5,7 +5,7 @@ import { action, makeObservable, observable, runInAction } from "mobx";
 import {Product, ProductRepository} from '../../repositories'
 import { MessagesPresenter, MessagesRepository } from "../../core";
 
-interface Vm {
+interface ViewModel {
     isLoading: boolean,
     product: Product,
 }
@@ -13,10 +13,10 @@ interface Vm {
 @singleton()
 export class ProductsDetailPagePresenter extends MessagesPresenter {
 
-  public vm: Vm = {
+  public vm: ViewModel = {
     isLoading: true,
     product: {},
-  } as Vm;
+  } as ViewModel;
  
   constructor(
     @inject(ProductRepository) private productRepo: ProductRepository,
@@ -52,7 +52,6 @@ export class ProductsDetailPagePresenter extends MessagesPresenter {
       category: product.category,
       description: product.description,
       image: product.image,
-
     }
   }
 

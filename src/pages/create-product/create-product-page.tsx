@@ -29,7 +29,7 @@ export const CreateProductPage = observer(() => {
 
    const onSubmit: SubmitHandler<any> = async (productData: ProductDto) => {
         const result = await create(productData)
-        if(result.success) {
+        if (result.success) {
           reset();
         }
    }

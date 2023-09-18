@@ -52,7 +52,6 @@ export class CreateProductPagePresenter extends MessagesPresenter {
    this.vm.isSubmittingForm = true;
    const productDto = await this.productRepo.create(product);
    this.vm.isSubmittingForm = false;
-
    productDto.success ? this.setUserMessages(['Product created successfully.']) : 
    this.setNetworkErrors(['Could not create product. Please try again.']);
 
